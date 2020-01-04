@@ -1,0 +1,103 @@
+{% extends 'layout.html' %}
+{% load static %}
+{% load social_share %}
+{% block body %}
+    <div id="homeCarousel" class="carousel slide" data-ride="carousel">
+        <ol class="carousel-indicators">
+            {% for ml_article in most_liked_articles %}
+                <li data-target="#homeCarousel" data-slide-to="{{forloop.counter0}}"></li>
+            {% endfor %}
+        </ol>
+        <div class="carousel-inner">
+            {% for ml_article in most_liked_articles %}
+                {% if forloop.first %}
+                <div class="carousel-item active">
+                {% else %}
+                <div class="carousel-item">
+                {% endif %}
+                    <a href="/articles/article/{{ ml_article.id }}">
+                        <img class="carousel-image" src="/media/{{ml_article.article_image}}"  alt="{{ml_article.title}}">
+                        <div class="carousel-caption">
+                            <h2><strong>{{ml_article.title}}</strong></h2>
+                            <p>{{ml_article.content|truncatewords_html:10|safe}}</p>
+                        </div>
+                    </a>
+                </div>
+            {% endfor %}    
+        </div>
+
+        <a class="carousel-control-prev" href="#homeCarousel" role="button" data-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="sr-only">Previous</span>
+        </a>
+        <a class="carousel-control-next" href="#homeCarousel" role="button" data-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="sr-only">Next</span>
+        </a>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-sm-12">
+                {% if articles %}
+                    {% for article in latest_articles %}
+                        <div class="card shadow mb-4 overflow-hidden" style="min-height: 300px">
+                            <div class="row no-gutters h-100">
+                                <div class="col-md-4">
+                                    <div class="d-flex h-100 align-items-center card-img-wrapper">
+                                        {% if article.article_image %}
+                                            <img class="w-100 h-100 card-img" src="{{ article.article_image.url }}" alt="{{ article.title }}">
+                                        {% else %}
+                                            <img class="w-100 h-100 card-img" src="https://source.unsplash.com/random" alt="{{ article.title }}">
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                <div class="col-md-8">
+                                    <div class="card-body">
+                                        <a href="{% url 'article:detail' article.id %}">
+                                            <h2 class="font-weight-bold">{{ article.title|upper }}</h2>
+                                        </a>
+                                        <p>
+                                            <span class="text-secondary mr-3"><i class="fa fa-user"></i> {{ article.author|upper }}</span>
+                                            <small class="text-muted"><i class="fa fa-calendar"></i> {{ article.created_date|timesince }} before</small>
+                                        </p>
+                                        <div class="dropdown-divider"></div>
+                                        <p class="card-text ">{{ article.content|safe|truncatewords_html:30 }}</p>
+                                        <h6 class="card-text text-right">
+                                            <a class="btn btn-outline-primary btn-sm" href="{% url 'article:detail' article.id %}">Read more</a>
+                                        </h6>
+                                    </div>
+                                </div>
+                            </div>
+                        </div> 
+                    {% endfor %}
+                {% else %}
+                    <div class="alert alert-danger">Article is not found.</div>
+                {% endif %}
+            </div>
+            <div class="col-lg-4 col-sm-12">
+                <div class="card">
+                    <div class="card-body ">
+                        <form class="form-inline">
+                            <input class="form-control w-100" type="search" placeholder="Search" aria-label="Search">
+                            <button style="margin-left: -38px" class="btn btn-primary btn-sm rounded-circle" type="submit"><i class="fa fa-search"></i></button>
+                        </form>
+                    </div>
+                </div>
+                <div class="card my-2">
+                <h5 class="card-header text-uppercase">Recommended Topics</h5>
+                <div class="card-body">
+                    <div class="list-group">
+                        <a class="list-group-item list-group-item-action" href="{% url 'article:reading' 0 %}">Django</a>
+                        <a class="list-group-item list-group-item-action" href="{% url 'article:reading' 1 %}">Python</a>
+                        <a class="list-group-item list-group-item-action" href="{% url 'article:reading' 2 %}">Computer</a>
+                        <a class="list-group-item list-group-item-action" href="{% url 'article:reading' 3 %}">Tecnology</a>
+                        <a class="list-group-item list-group-item-action" href="{% url 'article:reading' 4 %}">Data</a>
+                        <a class="list-group-item list-group-item-action" href="{% url 'article:reading' 5 %}">Web</a>
+                    </div>
+                </div>
+            </div>
+            </div>
+            
+        </div>
+    </div>
+{% endblock body %}

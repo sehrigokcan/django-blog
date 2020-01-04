@@ -1,0 +1,79 @@
+{% extends 'layout.html' %}
+{% load static %}
+
+{% block body %}
+<div class="container">
+   {% if not profile.user %}
+      <div class="alert alert-danger">
+         <p>You have an empty profile.</p>
+         <a href="{% url 'user:edit_profile' %}">Add some info</a>
+      </div>
+   {% else %}
+   <div class="row">
+      <!-- --------------- -->
+      <div class="col-md-3">
+         <div class="card">
+            <div class="p-3 mb-3">
+               {% if profile.image %}
+                  <img src="/media/{{profile.image}}" class="img-fluid rounded-circle" alt="" />               
+               {% else %}
+                  <img src=" {% static 'img/images.png' %}" class="img-fluid rounded-circle" alt="" />
+               {% endif %}
+            </div>
+            <div class="card-body">
+               <h5 class="card-title text-center">{{profile.first_name|upper}} {{profile.last_name|upper}}</h5>
+               <div class="list-group list-group-flush">
+                     <a class="list-group-item bg-transparent" href="{% url 'user:edit_profile' %}">Profile Update</a>
+                     <a class="list-group-item bg-transparent" href="{% url 'article:creat' %}">My Articles</a>
+               </div>
+            </div>
+         </div>
+      </div>
+      <!-- --------- -->
+      <div class="col-md-9">
+         <div class="card">
+            <div class="card-header">
+               <h4 class="text-center">Profile Informations</h4>
+            </div>
+            <div class="card-body">
+               <table class="table table-bordered table-hover">
+                  <tbody>
+                     <tr>
+                        <th scope="row">Name</th><td>{{profile.first_name}}</td>
+                     </tr>
+                     <tr>
+                        <th scope="row">Surname</th><td>{{profile.last_name}}</td>
+                     </tr>
+                     <tr>                     
+                        <th scope="row">Location</th><td>{{profile.location}}</td>
+                     </tr>
+                     <tr>                     
+                        <th scope="row">Birthdate</th><td>{{profile.birthdate}}</td>
+                     </tr>
+                     <tr>                     
+                        <th scope="row">Education</th><td>{{profile.education}}</td>
+                     </tr>
+                     <tr>                     
+                        <th scope="row">Language</th><td>{{profile.language}}</td>
+                     </tr>
+                     <tr>                  
+                        <th scope="row">Profession</th><td>{{profile.profession}}</td>
+                     </tr>
+                     <tr>                     
+                        <th scope="row">Phone</th><td>{{profile.phone}}</td>
+                     </tr>
+                     <tr>
+                        <th scope="row">Email</th><td>{{profile.email}}</td>
+                     </tr>
+                     <tr>   
+                        <th scope="row">Biography</th><td>{{profile.biography}}</td>
+                     </tr>
+                  </tbody>
+               </table>
+            </div>
+         </div>
+      </div>
+   </div>
+   {% endif %}
+</div>
+{% endblock body %}

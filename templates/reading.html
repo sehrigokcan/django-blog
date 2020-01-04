@@ -1,0 +1,44 @@
+{% extends "layout.html" %}
+{% load static %}
+{% load social_share %}
+{% block body %}
+
+
+    <!----------------- makaleler -->
+    <div class="container my-5">
+        <div class="row ">
+            {% if articles %}
+                {% for article in articles %}
+                    <div class="col-md-6">
+                        <div class="card ">
+                            <div class="card-body ">
+                                {% if article.article_image %}
+                                    <img class="reading-img img-fluid" src="{{ article.article_image.url }}" alt="">
+                                {% else %}
+                                    <img class="reading-img img-fluid" src="https://source.unsplash.com/random" alt="{{ article.title }}" />
+                                {% endif %}
+                                <div class="my-3">
+                                    <a href="/articles/article/{{ article.id }}">
+                                        <h3 class="mt-4 text-center">{{ article.title }}</h3>
+                                    </a>
+                                </div>
+                                <hr>
+                                <div class="card-text d-flex justify-content-between">
+                                    <!-- Author -->
+                                    <p class="font-weight-bold"><i class="fa fa-user"></i> By {{ article.author.username }}</p>
+                                    <!-- Date/Time -->
+                                    <p class="text-muted"><i class="fa fa-calendar"></i> {{ article.created_date|date:"d M Y" }}</p>
+                                </div>
+                                <p class="card-text text-right">
+                                    <a class="btn btn-outline-primary btn-sm" href="{% url 'article:detail' article.id %}">Read more</a>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <div class="alert alert-danger"> Article is not found.</div>
+            {% endif %}
+        </div>
+    </div>
+{% endblock body %}
