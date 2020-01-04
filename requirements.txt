@@ -28,10 +28,7 @@ Pillow==6.2.1
 pycodestyle==2.5.0
 Pygments==2.4.2
 PyInstaller==3.5
-pypiwin32==223
 pytz==2019.3
-pywin32==225
-pywin32-ctypes==0.2.0
 requests==2.22.0
 rope==0.14.0
 six==1.12.0
